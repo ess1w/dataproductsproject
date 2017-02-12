@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Predict Wage by Age, Marital Status, Education and Race</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Predict Wage by Age, Marital Status, Education and Race">
+  <meta name="author" content="Daniel Chaytor">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Predict Wage by Age, Marital Status, Education and Race</h1>
+    <h2>Using Generalised Linear Modeling</h2>
+    <p>Daniel Chaytor<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Introduction</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>This presentation introduces the PredictWage application. Using the Wage data in the ISLR package in R, it demonstrates how to predict the wages of individuals based on their age, sex, marital status, level of education, and, optionally, their race.</p>
+
+<p>The application uses a popular prediction model, generalised linear modeling. The user can</p>
+
+<ol>
+<li>Predict a person&#39;s wages based on age, marital sex and education</li>
+<li>View the effect of adding race as an additional predictor</li>
+<li>View the predicted result both graphically and as text output </li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Wage Data</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>A small sample of the data is shown below.</p>
+
+<pre><code>       age     sex           maritl     race       education
+231655  18 1. Male 1. Never Married 1. White    1. &lt; HS Grad
+86582   24 1. Male 1. Never Married 1. White 4. College Grad
+161300  45 1. Male       2. Married 1. White 3. Some College
+155159  43 1. Male       2. Married 3. Asian 4. College Grad
+11443   50 1. Male      4. Divorced 1. White      2. HS Grad
+376662  54 1. Male       2. Married 1. White 4. College Grad
+</code></pre>
+
+<p>Before we make predictions, we create training and testing sets from the data. The training set has 1,424 observations and 11 variables.</p>
+
+<pre><code>[1] 1474   11
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Processing and Predictions</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Creating our model on the training set, a plot of wage versus age is shown below:</p>
+
+<pre><code class="r">mod1 &lt;- train(wage ~ age + maritl + race + education,method=&quot;glm&quot;,data=training)
+pred1 &lt;- predict(mod1,testing) 
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>The Completed Application</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>The application is hosted on RStudio&#39;s ShinyApp server at <a href="https://twinhype.shinyapps.io/predictwage/">this URL</a>.</p></li>
+<li><p>Provides a simple user interface allowing you to select the person&#39;s age using a slider, with radio buttons for the other predictors. </p></li>
+<li><p>To include race as a predictor, select the Include Race checkbox.</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Wage Data'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Processing and Predictions'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='The Completed Application'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

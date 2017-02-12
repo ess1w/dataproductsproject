@@ -1,0 +1,90 @@
+---
+title       : Predict Wage by Age, Marital Status, Education and Race
+subtitle    : Using Generalised Linear Modeling
+author      : Daniel Chaytor
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Introduction
+
+This presentation introduces the PredictWage application. Using the Wage data in the ISLR package in R, it demonstrates how to predict the wages of individuals based on their age, sex, marital status, level of education, and, optionally, their race.
+
+The application uses a popular prediction model, generalised linear modeling. The user can
+
+1. Predict a person's wages based on age, marital sex and education
+2. View the effect of adding race as an additional predictor
+3. View the predicted result both graphically and as text output 
+
+--- .class #id 
+
+## Wage Data
+
+A small sample of the data is shown below.
+
+```{r, echo=FALSE, comment= "", warning=FALSE, message=FALSE}
+library(ISLR)
+library(ggplot2)
+library(lattice)
+library(caret)
+
+  # Load wage data 
+  data(Wage)
+  Wage <- subset(Wage,select=-c(logwage))
+  WageSample <- subset(Wage[,c(2:6)])
+  head(WageSample)
+```
+
+Before we make predictions, we create training and testing sets from the data. The training set has 1,424 observations and 11 variables.
+
+```{r, echo=FALSE, comment= "", warning=FALSE, message=FALSE,error=FALSE}
+  # Create a building data set and validation set
+  inBuild <- createDataPartition(y=Wage$wage,
+                                 p=0.7, list=FALSE)
+
+  validation <- Wage[-inBuild,]; buildData <- Wage[inBuild,]
+  
+  inTrain <- createDataPartition(y=buildData$wage,
+                                 p=0.7, list=FALSE)
+  training <- buildData[inTrain,]; testing <- buildData[-inTrain,]
+  
+  dim(training)
+```
+
+--- .class #id 
+
+## Processing and Predictions
+
+Creating our model on the training set, a plot of wage versus age is shown below:
+
+```{r, echo=TRUE, comment= "", warning=FALSE, message=FALSE}
+mod1 <- train(wage ~ age + maritl + race + education,method="glm",data=training)
+pred1 <- predict(mod1,testing) 
+```
+
+```{r, echo=FALSE, comment= "", warning=FALSE, message=FALSE}
+plot(Wage$age, Wage$wage, xlab = "Age", ylab = "Wage", bty = "n", 
+     pch = 15, xlim = c(18, 70), ylim = c(10, 280))
+```
+
+--- .class #id 
+
+## The Completed Application
+
+* The application is hosted on RStudio's ShinyApp server at [this URL](https://twinhype.shinyapps.io/predictwage/).
+
+* Provides a simple user interface allowing you to select the person's age using a slider, with radio buttons for the other predictors. 
+
+* To include race as a predictor, select the Include Race checkbox.
+
+
+
+
+
+
+
